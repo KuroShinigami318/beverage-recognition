@@ -1,0 +1,2 @@
+python model_main_tf2.py --model_dir=training --pipeline_config_path=config/pipeline.config --checkpoint_dir=training --eval_timeout=5400
+tensorboard --logdir=.
