@@ -79,15 +79,15 @@ item {
 	id: 20
 }
 item {
-	name: " aquafina"
+	name: "aquafina"
 	id: 21
 }
 item {
-	name: " 7up"
+	name: "7up"
 	id: 22
 }
 item {
-	name: " teaplus"
+	name: "teaplus"
 	id: 23
 }
 item {
