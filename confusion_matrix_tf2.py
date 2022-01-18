@@ -123,7 +123,12 @@ def process_detections(input_tfrecord_path, model, categories, draw_option, draw
 
             if decoded_dict:
                 image = decoded_dict[fields.InputDataFields.image]
-                input_tensor = np.expand_dims(Image.open(io.BytesIO(image)), axis=0)
+                input_tensor = np.expand_dims(Image.open(io.BytesIO(image)), axis=0).astype('uint8')
+                if input_tensor.ndim == 3:
+                    input_tensor = np.resize(input_tensor,
+                                             (input_tensor.shape[0], input_tensor.shape[1], input_tensor.shape[2], 3))
+                else:
+                    input_tensor = input_tensor[:, :, :, :3]
                 groundtruth_boxes = decoded_dict[fields.InputDataFields.groundtruth_boxes]
                 groundtruth_classes = decoded_dict[fields.InputDataFields.groundtruth_classes].astype('uint8')
                 detections = model(input_tensor)  # Run model inference
