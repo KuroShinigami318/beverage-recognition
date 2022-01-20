@@ -2,3 +2,4 @@
 Cython
 tensorflow-object-detection-api
 streamlit
+requests
