@@ -14,7 +14,7 @@ sacrebleu==2.0.0
 scipy==1.7.3
 PyYAML==6.0
 opencv-python==4.5.5.62
-pycocotools==2.0
+pycocotools
 keras==2.7.0
 setuptools==60.5.0
 h5py==3.1.0
