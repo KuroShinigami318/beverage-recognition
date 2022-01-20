@@ -1,3 +1,4 @@
 ###### Requirements ######
 Cython
 tensorflow-object-detection-api
+streamlit
