@@ -1,5 +1,5 @@
 ###### Requirements ######
 Cython
-tf2-tensorflow-object-detection-api
+object-detection-neko
 streamlit
 requests

@@ -24,7 +24,7 @@ REQUIRED_PACKAGES = [
 ]
 
 setup(
-    name='object_detection',
+    name='object_detection_neko',
     version='0.1',
     install_requires=REQUIRED_PACKAGES,
     include_package_data=True,
