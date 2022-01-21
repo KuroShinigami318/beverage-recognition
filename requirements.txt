@@ -1,5 +1,6 @@
 ###### Requirements ######
-Cython
+cython
+git+https://github.com/philferriere/cocoapi.git#subdirectory=PythonAPI
 object-detection-neko
 streamlit
 requests
