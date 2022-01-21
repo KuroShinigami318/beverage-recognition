@@ -2,13 +2,11 @@ import streamlit as st
 import requests
 import io
 from PIL import Image
-import glob
-from io import BytesIO
+import pandas as pd
 import numpy as np
 from object_detection.utils import ops as utils_ops
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
-import os
 import tensorflow as tf
 
 st.sidebar.write('#### Select an image to upload.')
@@ -20,9 +18,6 @@ uploaded_file = st.sidebar.file_uploader('',
 confidence_threshold = st.sidebar.slider(
     'Confidence threshold: What is the minimum acceptable confidence level for displaying a bounding box?', 0.0, 1.0,
     0.5, 0.01)
-overlap_threshold = st.sidebar.slider(
-    'Overlap threshold: What is the maximum amount of overlap permitted between visible bounding boxes?', 0.0, 1.0, 0.5,
-    0.01)
 
 ## Title.
 st.write('# Beverage Recognition Object Detection')
@@ -89,13 +84,14 @@ def show_inference(model, labels, img):
         labels,
         instance_masks=output_dict.get('detection_masks_reframed', None),
         use_normalized_coordinates=True,
+        min_score_thresh=confidence_threshold,
         line_thickness=8)
 
     image = Image.fromarray(np.uint8(image_np)).convert('RGB')
     # Convert to JPEG Buffer.
     buffered = io.BytesIO()
     image.save(buffered, quality=90, format='JPEG')
-    return image
+    return image, output_dict
 
 
 model_dir = 'my_model/saved_model'
@@ -104,5 +100,14 @@ label_map_path = 'assets/dataset/annotations/labelmap.pbtxt'
 model = load_model(model_dir)
 labels = load_labels(label_map_path)
 # Display image.
-st.image(show_inference(model, labels, image),
-         use_column_width=True)
+image, output_dict = show_inference(model, labels, image)
+st.image(image, use_column_width=True)
+
+# Display chart
+st.write('### Beverages')
+get_labels = lambda i: labels[i]['name']
+detection_labels = []
+for i in output_dict['detection_classes']:
+    detection_labels.append(get_labels(i))
+chart_data = pd.DataFrame(output_dict['detection_scores'], index=detection_labels, columns=['Probability'])
+st.bar_chart(chart_data)
