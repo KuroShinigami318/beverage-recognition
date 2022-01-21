@@ -13,7 +13,7 @@ import tensorflow as tf
 
 st.sidebar.write('#### Select an image to upload.')
 uploaded_file = st.sidebar.file_uploader('',
-                                         type=['png', 'jpg', 'jpeg'],
+                                         type=['jpg'],
                                          accept_multiple_files=False)
 
 ## Add in sliders.
@@ -46,6 +46,7 @@ def load_model(model_dir):
     return tf.saved_model.load(model_dir)
 
 
+@st.cache
 def load_labels(label_map_path):
     return label_map_util.create_category_index_from_labelmap(label_map_path, use_display_name=True)
 
