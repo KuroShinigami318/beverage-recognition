@@ -1,5 +1,5 @@
 ###### Requirements ######
 Cython
-tensorflow-object-detection-api
+tf2-tensorflow-object-detection-api
 streamlit
 requests
